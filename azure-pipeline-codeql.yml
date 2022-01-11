@@ -1,0 +1,33 @@
+#
+# A CodeQL pipline
+# See also https://www.1eswiki.com/wiki/CodeQL_Build_Task
+#
+
+variables:
+  LGTM.UploadSnapshot: false
+  Semmle.SkipAnalysis: false
+
+steps:
+- task: Semmle@1
+  displayName: 'Analyze csharp projects'
+  inputs:
+    toolVersion: 'Latest'
+    sourceCodeDirectory: '$(Build.SourcesDirectory)'
+    language: 'csharp'
+    buildCommandsString: 'build.cmd -configuration Release -prepareMachine'
+    querySuite: 'Required'
+    timeout: '1800'
+    ram: '16384'
+    addProjectDirToScanningExclusionList: true
+
+
+- task: Semmle@1
+  displayName: 'Analyze typescript projects'
+  inputs:
+    toolVersion: 'Latest'
+    sourceCodeDirectory: '$(Build.SourcesDirectory)\src\Maestro\maestro-angular'
+    language: 'typescript'
+    querySuite: 'Required'
+    timeout: '1800'
+    ram: '16384'
+    addProjectDirToScanningExclusionList: true
