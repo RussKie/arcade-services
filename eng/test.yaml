@@ -6,6 +6,12 @@ steps:
     targetType: filePath
     filePath: eng\Install-SqlExpress.ps1
 
+  - script: |
+    echo '##vso[task.setvariable variable=ENVIRONMENT]Development'
+  
+  - script: |
+    echo '##vso[task.setvariable variable=ASPNETCORE_ENVIRONMENT]Development'
+
 - task: DotNetCoreCLI@2
   displayName: Test C# (dotnet test)
   inputs:
