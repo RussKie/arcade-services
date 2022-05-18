@@ -6,29 +6,8 @@ steps:
     targetType: filePath
     filePath: eng\Install-SqlExpress.ps1
 
-- task: DotNetCoreCLI@2
+- script: dotnet test $(Build.SourcesDirectory)\arcade-services.sln --configuration $(_BuildConfig) --collect:"Code Coverage" --settings:CodeCoverage.runsettings --filter "TestCategory!=PostDeployment&TestCategory!=Nightly&TestCategory!=PreDeployment" --no-build --logger "trx;LogFilePrefix=TestResults-" -v normal -- "RunConfiguration.ResultsDirectory=$(Build.ArtifactStagingDirectory)\TestResults" RunConfiguration.MapCpuCount=4
   displayName: Test C# (dotnet test)
-  inputs:
-    command: custom
-    projects: |
-      $(Build.SourcesDirectory)\arcade-services.sln
-    custom: test
-    arguments: > 
-      --configuration $(_BuildConfig)
-      --collect:"Code Coverage"
-      --settings:CodeCoverage.runsettings
-      --filter "TestCategory!=PostDeployment&TestCategory!=Nightly&TestCategory!=PreDeployment"
-      --no-build
-      --logger "trx;LogFilePrefix=TestResults-"
-      -v normal
-      --
-      "RunConfiguration.ResultsDirectory=$(Build.ArtifactStagingDirectory)\TestResults"
-      RunConfiguration.MapCpuCount=4
-  env:
-    NUGET_PACKAGES: $(Build.SourcesDirectory)/.packages
-    ENVIRONMENT: AnUnrecognizedValue
-    ASPNETCORE_ENVIRONMENT: AnUnrecognizedValue
-    DOTNET_ENVIRONMENT: AnUnrecognizedValue
   condition: succeededOrFailed()
 
 - task: Powershell@2
