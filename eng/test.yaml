@@ -5,7 +5,7 @@ steps:
   inputs: 
     targetType: filePath
     filePath: eng\Install-SqlExpress.ps1
-    
+
 - task: DotNetCoreCLI@2
   displayName: Test C# (dotnet test)
   inputs:
@@ -28,6 +28,7 @@ steps:
     NUGET_PACKAGES: $(Build.SourcesDirectory)/.packages
     ENVIRONMENT: Development
     ASPNETCORE_ENVIRONMENT: Development
+    DOTNET_ENVIRONMENT: Development
   condition: succeededOrFailed()
 
 - task: Powershell@2
