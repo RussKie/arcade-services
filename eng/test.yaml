@@ -26,9 +26,9 @@ steps:
       RunConfiguration.MapCpuCount=4
   env:
     NUGET_PACKAGES: $(Build.SourcesDirectory)/.packages
-    ENVIRONMENT: Development
-    ASPNETCORE_ENVIRONMENT: Development
-    DOTNET_ENVIRONMENT: Development
+    ENVIRONMENT: AnUnrecognizedValue
+    ASPNETCORE_ENVIRONMENT: AnUnrecognizedValue
+    DOTNET_ENVIRONMENT: AnUnrecognizedValue
   condition: succeededOrFailed()
 
 - task: Powershell@2
